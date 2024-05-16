@@ -1,8 +1,7 @@
-import fs from "fs";
-import saveToDatabase from "./utils.js";
+import DB from "./utils.js";
 
 const pathToFile = "./src/database/carts.json";
-const cartsJSON = await fs.promises.readFile(pathToFile, "utf-8");
+const cartsJSON = await DB.readFromDataBase(pathToFile);
 const cartsParsed = await JSON.parse(cartsJSON);
 
 const createNewCart = async (newCart) => {
@@ -18,7 +17,7 @@ const createNewCart = async (newCart) => {
     }
 
     cartsParsed.push(newCart);
-    saveToDatabase(pathToFile, cartsParsed);
+    DB.saveToDatabase(pathToFile, cartsParsed);
 
     return cartsParsed;
   } catch (error) {
@@ -79,7 +78,7 @@ const addProductToCart = (newProductToCart) => {
 
     cartsParsed[cartIndex] = updatedCart;
 
-    saveToDatabase(pathToFile, cartsParsed);
+    DB.saveToDatabase(pathToFile, cartsParsed);
 
     return updatedCart;
   } catch (error) {

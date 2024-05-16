@@ -1,8 +1,7 @@
-import fs from "fs";
-import saveToDatabase from "./utils.js";
+import DB from "./utils.js";
 
 const pathToFile = "./src/database/products.json";
-const productsJSON = await fs.promises.readFile(pathToFile, "utf-8");
+const productsJSON = await DB.readFromDataBase(pathToFile);
 const productParsed = await JSON.parse(productsJSON);
 
 const getAllProducts = async () => {
@@ -43,7 +42,7 @@ const createNewProduct = async (newProduct) => {
       };
     }
     productParsed.push(newProduct);
-    saveToDatabase(pathToFile, productParsed);
+    DB.saveToDatabase(pathToFile, productParsed);
 
     return newProduct;
   } catch (error) {
@@ -71,9 +70,8 @@ const updateProduct = async (productToUpdate) => {
     };
 
     productParsed[indexToUpdate] = product;
-    saveToDatabase(pathToFile, productParsed);
+    DB.saveToDatabase(pathToFile, productParsed);
     return product;
-    
   } catch (error) {
     throw { status: error?.status || 500, message: error?.message || error };
   }
@@ -90,7 +88,7 @@ const deleteProduct = (pid) => {
       };
     }
     productParsed.splice(indexForDeletion, 1);
-    saveToDatabase(pathToFile, productParsed);
+    DB.saveToDatabase(pathToFile, productParsed);
 
     return productDeleted;
   } catch (error) {
