@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "title": "Lapicera",
+    "description": "lapicera bic azul",
+    "code": "ABC123",
+    "price": 200,
+    "status": true,
+    "stock": 250,
+    "category": "utiles",
+    "thumbnails": [
+      "img1",
+      "img2",
+      "img3"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Cartuchera",
+    "description": "Cartuchera marca cartuchera",
+    "code": "GHT541",
+    "price": 1000,
+    "status": true,
+    "stock": 100,
+    "category": "utiles",
+    "thumbnails": [
+      "img1",
+      "img2",
+      "img3"
+    ]
+  },
+  {
+    "name": "MacBook Pro",
+    "description": "Laptop de Apple",
+    "price": 1800,
+    "code": "RFB987",
+    "stock": 500,
+    "status": true,
+    "category": "Electronica",
+    "thumbnails": [
+      "img1",
+      "img2"
+    ],
+    "id": 877
+  }
+]
