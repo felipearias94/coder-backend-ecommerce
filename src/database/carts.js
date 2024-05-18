@@ -1,4 +1,5 @@
 import DB from "./utils.js";
+import ProductDB from "./products.js";
 
 const pathToFile = "./src/database/carts.json";
 const cartsJSON = await DB.readFromDataBase(pathToFile);
@@ -47,16 +48,24 @@ const getAllProductsInCart = (cid) => {
   }
 };
 
-const addProductToCart = (newProductToCart) => {
+const addProductToCart = async (newProductToCart) => {
   try {
     const cartIndex = cartsParsed.findIndex(
       (cart) => cart.id === newProductToCart.cid
     );
+    const productExist = await ProductDB.getProductById(newProductToCart.pid);
 
     if (cartIndex < 0) {
       throw {
         status: 404,
         message: `No se encontró el carrito con ID ${newProductToCart.cid}`,
+      };
+    }
+
+    if (!productExist) {
+      throw {
+        status: 404,
+        message: `No se encontró el producto con ID ${newProductToCart.pid}`,
       };
     }
 
