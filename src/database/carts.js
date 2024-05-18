@@ -38,7 +38,6 @@ const getAllProductsInCart = (cid) => {
       };
     }
 
-    //Debe buscar por ID los productos dentro del carrito y volver a armar el objeto de producto?
     return cartById.products;
   } catch (error) {
     throw {

@@ -2,7 +2,8 @@ import productsServices from "../services/products.service.js";
 
 const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await productsServices.getAllProducts();
+    const { limit } = req.query;
+    const allProducts = await productsServices.getAllProducts(limit);
     res.status(200).json({ status: "OK", payload: allProducts });
   } catch (error) {
     res
@@ -26,41 +27,26 @@ const getProductById = async (req, res) => {
 
 const createNewProduct = async (req, res) => {
   try {
+    let { title, description, price, thumbnail, code, stock, category } =
+      req.body;
+
     let newProduct = {
-      ...req.body,
-    };
-
-    if (
-      !newProduct.name ||
-      !newProduct.description ||
-      !newProduct.price ||
-      !newProduct.code ||
-      !newProduct.stock ||
-      !newProduct.category ||
-      !newProduct.thumbnails
-    ) {
-      throw {
-        status: 400,
-        message: "Todos los campos son obligatorios",
-      };
-    }
-
-    if (!newProduct.status) {
-      newProduct = {
-        ...newProduct,
-        status: true,
-      };
-    }
-
-    newProduct = {
-      ...req.body,
       id: new Date().getMilliseconds(),
+      title,
+      description,
+      price,
+      thumbnail: thumbnail || [],
+      code,
+      stock,
+      category,
+      status: true,
     };
 
     const createdNewProduct = await productsServices.createNewProduct(
       newProduct
     );
-    res.status(200).json({ status: "OK", payload: createdNewProduct });
+    
+    res.status(201).json({ status: "OK", payload: createdNewProduct });
   } catch (error) {
     res
       .status(error?.status || 500)
@@ -84,7 +70,9 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const deletedProduct = await productsServices.deleteProduct(Number(req.params.pid));
+    const deletedProduct = await productsServices.deleteProduct(
+      Number(req.params.pid)
+    );
     res.status(200).json({ status: "OK", payload: deletedProduct });
   } catch (error) {
     res

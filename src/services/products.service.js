@@ -1,7 +1,7 @@
 import productsDB from "../database/products.js";
 
-const getAllProducts = () => {
-  return productsDB.getAllProducts();
+const getAllProducts = (limit) => {
+  return productsDB.getAllProducts(limit);
 };
 const getProductById = (pid) => {
   return productsDB.getProductById(pid);
