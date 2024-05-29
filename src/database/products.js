@@ -50,11 +50,11 @@ const updateProduct = async (productToUpdate) => {
     const indexToUpdate = productParsed.findIndex(
       (prod) => prod.id === productToUpdate.id
     );
-
+    console.log(productToUpdate);
     if (indexToUpdate < 0) {
       throw {
         status: 404,
-        message: `No se encuentra el producto ${productToUpdate.name} para actualizarlo.`,
+        message: `El producto con ID: ${productToUpdate.id} no se encuentra para actualizarlo.`,
       };
     }
 
