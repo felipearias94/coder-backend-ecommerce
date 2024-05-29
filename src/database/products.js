@@ -4,9 +4,13 @@ const pathToFile = "./src/database/products.json";
 const productsJSON = await DB.readFromDataBase(pathToFile);
 const productParsed = await JSON.parse(productsJSON);
 
-const getAllProducts = async () => {
+const getAllProducts = async (limit) => {
   try {
-    return productParsed;
+    let products = productParsed || [];
+
+    if (!limit) return products;
+
+    return productParsed.slice(0, limit);
   } catch (error) {
     throw { status: 500, message: error };
   }
@@ -32,15 +36,6 @@ const getProductById = async (pid) => {
 
 const createNewProduct = async (newProduct) => {
   try {
-    const isAlreadyAdded =
-      productParsed.findIndex((prod) => prod.id === newProduct.id) > -1;
-
-    if (isAlreadyAdded) {
-      throw {
-        status: 400,
-        message: `El producto ${newProduct.name} ya existe`,
-      };
-    }
     productParsed.push(newProduct);
     DB.saveToDatabase(pathToFile, productParsed);
 
@@ -55,11 +50,11 @@ const updateProduct = async (productToUpdate) => {
     const indexToUpdate = productParsed.findIndex(
       (prod) => prod.id === productToUpdate.id
     );
-
+    console.log(productToUpdate);
     if (indexToUpdate < 0) {
       throw {
         status: 404,
-        message: `No se encuentra el producto ${productToUpdate.name} para actualizarlo.`,
+        message: `El producto con ID: ${productToUpdate.id} no se encuentra para actualizarlo.`,
       };
     }
 

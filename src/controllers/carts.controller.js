@@ -2,13 +2,6 @@ import cartsService from "../services/carts.service.js";
 
 const createNewCart = async (req, res) => {
   try {
-    if (req.body.quantity <= 0) {
-      throw {
-        status: 400,
-        message: `La cantidad del producto debe ser mayor a ${req.body.quantity}`,
-      };
-    }
-
     const productsWithQuantity = req.body.products.map((product) => ({
       id: product.product.id,
       quantity: product.quantity,
@@ -32,7 +25,8 @@ const getAllProductInCart = async (req, res) => {
   try {
     const cid = Number(req.params.cid);
     const productsInCart = await cartsService.getAllProductsInCart(cid);
-    res.status(200).json({ status: "OK", payload: productsInCart });
+    const payload = { cartId: cid, productsInCart: productsInCart };
+    res.status(200).json({ status: "OK", payload: payload });
   } catch (error) {
     res
       .status(error?.status || 500)

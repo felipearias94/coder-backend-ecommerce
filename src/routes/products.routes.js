@@ -1,5 +1,6 @@
 import { Router } from "express";
 import productController from "../controllers/products.controller.js";
+import { checkProductData } from "../middlewares/checkProductData.middleware.js";
 
 const router = Router();
 
@@ -12,7 +13,7 @@ router
     productController.getProductById(req, res);
   })
 
-  .post("/", (req, res) => {
+  .post("/", checkProductData, (req, res) => {
     productController.createNewProduct(req, res);
   })
 

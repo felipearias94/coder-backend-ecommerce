@@ -8,7 +8,7 @@
     "status": true,
     "stock": 250,
     "category": "utiles",
-    "thumbnails": [
+    "thumbnail": [
       "img1",
       "img2",
       "img3"
@@ -23,24 +23,35 @@
     "status": true,
     "stock": 100,
     "category": "utiles",
-    "thumbnails": [
+    "thumbnail": [
       "img1",
       "img2",
       "img3"
     ]
   },
   {
-    "name": "MacBook Pro",
+    "title": "MacBook Pro",
     "description": "Laptop de Apple",
     "price": 1800,
     "code": "RFB987",
-    "stock": 500,
+    "stock": 15000,
     "status": true,
     "category": "Electronica",
-    "thumbnails": [
+    "thumbnail": [
       "img1",
       "img2"
     ],
     "id": 877
+  },
+  {
+    "id": 431,
+    "title": "Detergente",
+    "description": "cosas de limpieza",
+    "price": 100,
+    "thumbnail": [],
+    "code": "RFB988",
+    "stock": 500,
+    "category": "limpieza",
+    "status": true
   }
 ]
