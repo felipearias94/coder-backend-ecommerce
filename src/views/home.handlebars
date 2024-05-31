@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>Lista de Productos</h1>
+  <div id="productList" class="d-flex md-5">
+    {{#each products}}
+      <div class="card m-1 py-2 px-4" style="width: 18rem;">
+        <h3>{{this.title}}</h3>
+        <p>Descripción: {{this.description}}</p>
+        <p>Precio: ${{this.price}}</p>
+        <p>Stock: {{this.stock}}</p>
+        <p>Código: {{this.code}}</p>
+      </div>
+    {{/each}}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

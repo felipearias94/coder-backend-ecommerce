@@ -31,7 +31,7 @@ const createNewProduct = async (req, res) => {
       req.body;
 
     let newProduct = {
-      id: new Date().getMilliseconds(),
+      // id: new Date().getMilliseconds(), en el servicio se explica pq se saca el generador de ID.
       title,
       description,
       price,

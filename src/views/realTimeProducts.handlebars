@@ -1,0 +1,43 @@
+<div class="px-5 py-3">
+  <h2 class="pb-2">Agregar Producto</h2>
+  <div class="d-flex p-5">
+
+    <form class="d-flex flex-column gap-2 m-3" id="productForm">
+      <input
+        type="text"
+        id="title"
+        placeholder="Nombre del producto"
+        required
+      />
+
+      <input
+        type="text"
+        id="description"
+        placeholder="Descripción del producto"
+        required
+      />
+
+      <input
+        type="number"
+        id="price"
+        placeholder="Precio del producto"
+        required
+      />
+
+      <button class="btn btn-primary mt-4" type="submit">Agregar</button>
+    </form>
+
+    <form class="d-flex flex-column gap-2 m-2" id="deleteForm">
+      <input type="text" name="id" id="id" placeholder="ID del producto" />
+      <button type="submit" class="btn btn-danger">Eliminar producto</button>
+    </form>
+  </div>
+
+  <div id="productList">
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>
