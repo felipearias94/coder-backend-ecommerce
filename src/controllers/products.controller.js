@@ -31,7 +31,6 @@ const createNewProduct = async (req, res) => {
       req.body;
 
     let newProduct = {
-      // id: new Date().getMilliseconds(), en el servicio se explica pq se saca el generador de ID.
       title,
       description,
       price,
@@ -45,7 +44,7 @@ const createNewProduct = async (req, res) => {
     const createdNewProduct = await productsServices.createNewProduct(
       newProduct
     );
-    
+
     res.status(201).json({ status: "OK", payload: createdNewProduct });
   } catch (error) {
     res
@@ -56,10 +55,11 @@ const createNewProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await productsServices.updateProduct({
+    const { pid } = req.params;
+    const updatedProduct = await productsServices.updateProduct(pid, {
       ...req.body,
-      id: Number(req.params.pid),
     });
+    
     res.status(200).json({ status: "OK", payload: updatedProduct });
   } catch (error) {
     res
@@ -70,9 +70,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const deletedProduct = await productsServices.deleteProduct(
-      Number(req.params.pid)
-    );
+    const deletedProduct = await productsServices.deleteProduct(req.params.pid);
     res.status(200).json({ status: "OK", payload: deletedProduct });
   } catch (error) {
     res

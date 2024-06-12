@@ -1,7 +1,7 @@
 import DB from "./utils.js";
 import ProductDB from "./products.js";
 
-const pathToFile = "./src/database/carts.json";
+const pathToFile = "./src/dao/filesystem/database/carts.json";
 const cartsJSON = await DB.readFromDataBase(pathToFile);
 const cartsParsed = await JSON.parse(cartsJSON);
 

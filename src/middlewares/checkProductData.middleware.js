@@ -1,5 +1,5 @@
 import { request, response } from "express";
-import Products from "../database/products.js";
+import Products from "../database/product.dao.js";
 
 export const checkProductData = async (req = request, res = response, next) => {
   try {
@@ -14,7 +14,7 @@ export const checkProductData = async (req = request, res = response, next) => {
       category,
     };
 
-    const products = await Products.getAllProducts();
+    const products = await Products.getAll();
     const productExist = products.find((prod) => prod.code === code);
 
     if (productExist)

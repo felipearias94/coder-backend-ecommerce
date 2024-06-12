@@ -5,10 +5,12 @@ import routes from "./routes/index.routes.js";
 import viewsRoutes from "./routes/views.routes.js";
 
 import { Server } from "socket.io";
+import { connectToDB } from "./config/db.config.js";
 
 const PORT = process.env.PORT || 8080;
 const app = express();
 
+connectToDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
