@@ -15,12 +15,14 @@ export const checkProductData = async (req = request, res = response, next) => {
     };
 
     const products = await Products.getAll();
-    const productExist = products.find((prod) => prod.code === code);
+    const productExist = products.find((prod) => {
+      prod.code === code;
+    });
 
     if (productExist)
       return res.status(400).json({
         status: "Error",
-        message: `El producto ${newProduct.title} ya existe`,
+        message: `El producto ${newProduct.title} ya existe con código ${newProduct.code}`,
       });
 
     const checkData = Object.values(newProduct).includes(undefined);

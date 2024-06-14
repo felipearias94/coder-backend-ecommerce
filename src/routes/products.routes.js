@@ -1,6 +1,7 @@
 import { Router } from "express";
 import productController from "../controllers/products.controller.js";
 import { checkProductData } from "../middlewares/checkProductData.middleware.js";
+import { productExistance } from "../middlewares/productExistance.middleware.js";
 
 const router = Router();
 
@@ -9,7 +10,7 @@ router
     productController.getAllProducts(req, res);
   })
 
-  .get("/:pid", (req, res) => {
+  .get("/:pid", productExistance, (req, res) => {
     productController.getProductById(req, res);
   })
 
@@ -17,11 +18,11 @@ router
     productController.createNewProduct(req, res);
   })
 
-  .put("/:pid", (req, res) => {
+  .put("/:pid", productExistance, (req, res) => {
     productController.updateProduct(req, res);
   })
 
-  .delete("/:pid", (req, res) => {
+  .delete("/:pid", productExistance, (req, res) => {
     productController.deleteProduct(req, res);
   });
 

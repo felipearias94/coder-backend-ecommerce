@@ -34,7 +34,7 @@ const addProductToCart = async (cid, pid) => {
   if (!cart) {
     return { cart: false };
   }
-  
+
   const productInCart = await cartModel.findOneAndUpdate(
     { _id: cid, "products.product": pid },
     { $inc: { "products.$.quantity": 1 } }
@@ -51,10 +51,39 @@ const addProductToCart = async (cid, pid) => {
   return cartUpdated;
 };
 
+const updateProductQuantity = async (cid, pid, quantity) => {
+  const cart = await cartModel.findById(cid);
+
+  const product = cart.products.find((prod) => prod.product._id == pid);
+  product.quantity = quantity;
+
+  await cart.save();
+  return cart;
+};
+
+const deleteProductFromCart = async (cid, pid) => {
+  const cart = await cartModel.findById(cid);
+  cart.products = cart.products.filter((prod) => prod.product._id != pid);
+
+  await cart.save();
+  return cart;
+};
+
+const deleteAllProductFromCart = async (cid) => {
+  const cart = await cartModel.findById(cid);
+  cart.products = [];
+
+  await cart.save();
+  return cart;
+};
+
 export default {
   getAll,
   getById,
   create,
   update,
   addProductToCart,
+  updateProductQuantity,
+  deleteProductFromCart,
+  deleteAllProductFromCart,
 };

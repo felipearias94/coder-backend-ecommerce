@@ -5,6 +5,11 @@ const getAll = async () => {
   return products;
 };
 
+const getProducts = async (query, options) => {
+  const products = await productModel.paginate(query, options);
+  return products;
+};
+
 const getById = async (id) => {
   const products = await productModel.findById(id);
   return products;
@@ -32,6 +37,7 @@ const deleteOne = async (id) => {
 
 export default {
   getAll,
+  getProducts,
   getById,
   create,
   update,

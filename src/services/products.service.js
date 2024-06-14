@@ -1,7 +1,11 @@
 import productsDB from "../database/product.dao.js";
 
-const getAllProducts = (limit) => {
-  return productsDB.getAll(limit);
+const getAllProducts = () => {
+  return productsDB.getAll();
+};
+
+const getProducts = (query, options) => {
+  return productsDB.getProducts(query, options);
 };
 
 const getProductById = (pid) => {
@@ -22,6 +26,7 @@ const deleteProduct = (pid) => {
 
 export default {
   getAllProducts,
+  getProducts,
   getProductById,
   createNewProduct,
   updateProduct,

@@ -16,9 +16,24 @@ const getCartById = (cid) => {
   return cartsDB.getById(cid);
 };
 
+const updateProductQuantity = async (cid, pid, quantity) => {
+  return cartsDB.updateProductQuantity(cid, pid, quantity);
+};
+
+const deleteProductFromCart = (cid, pid) => {
+  return cartsDB.deleteProductFromCart(cid, pid);
+};
+
+const deleteAllProductFromCart = (cid) => {
+  return cartsDB.deleteAllProductFromCart(cid);
+};
+
 export default {
   createNewCart,
   getAllProductsInCart,
   addProductToCart,
   getCartById,
+  updateProductQuantity,
+  deleteProductFromCart,
+  deleteAllProductFromCart,
 };
