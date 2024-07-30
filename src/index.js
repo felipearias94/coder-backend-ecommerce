@@ -16,7 +16,7 @@ const app = express();
 connectToDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(cookieParser(envsConfig.SECRET_CODE));
+app.use(cookieParser());
 app.use(
   session({
     secret: envsConfig.SECRET_CODE,
@@ -29,9 +29,11 @@ app.engine("handlebars", handlebars.engine());
 app.set("views", _dirname + "/views");
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
+
 initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
+
 app.use("/api", routes);
 app.use("/", viewsRoutes);
 

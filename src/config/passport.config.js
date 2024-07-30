@@ -4,9 +4,13 @@ import usersService from "../services/users.service.js";
 import { hashPassword, isValidPassword } from "../utils/hashPassword.js";
 import google from "passport-google-oauth20";
 import envsConfig from "./envs.config.js";
+import jwt from "passport-jwt";
+import { cookieExtractor } from "../utils/cookieExtractor.js";
 
 const LocalStrategy = local.Strategy;
 const GoogleStrategy = google.Strategy;
+const JWTStrategy = jwt.Strategy;
+const ExtractJWT = jwt.ExtractJwt;
 
 export const initializePassport = () => {
   passport.use(
@@ -93,6 +97,24 @@ export const initializePassport = () => {
 
           return cb(null, userCreated);
         } catch (error) {}
+      }
+    )
+  );
+
+  // Estrategia de JWT
+  passport.use(
+    "jwt",
+    new JWTStrategy(
+      {
+        jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+        secretOrKey: envsConfig.JWT_SECRET_CODE,
+      },
+      async (jwt_payload, done) => {
+        try {
+          return done(null, jwt_payload);
+        } catch (error) {
+          return done(error);
+        }
       }
     )
   );
