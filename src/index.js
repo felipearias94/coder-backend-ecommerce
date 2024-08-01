@@ -14,25 +14,26 @@ import { initializePassport } from "./config/passport.config.js";
 const app = express();
 
 connectToDB();
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   session({
-    secret: envsConfig.SECRET_CODE,
+    secret: process.env.SECRET_CODE,
     resave: true, //mantiene la sesion activa. Si fuera false, se cerraria luego de un tiempo
-    saveUninitialized: true,
+    saveUninitialized: true, //Guarda la sesión
   })
 );
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine("handlebars", handlebars.engine());
 app.set("views", _dirname + "/views");
 app.set("view engine", "handlebars");
 app.use(express.static("public"));
-
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use("/api", routes);
 app.use("/", viewsRoutes);
