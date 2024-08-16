@@ -54,6 +54,8 @@ const addProductToCart = async (cid, pid) => {
 const updateProductQuantity = async (cid, pid, quantity) => {
   const cart = await cartModel.findById(cid);
 
+  console.log(cart);
+
   const product = cart.products.find((prod) => prod.product._id == pid);
   product.quantity = quantity;
 

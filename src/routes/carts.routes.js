@@ -1,9 +1,13 @@
 import { Router } from "express";
 import cartsController from "../controllers/carts.controller.js";
 import { checkCartData } from "../middlewares/checkCartData.middleware.js";
-import { cartExistance } from "../middlewares/cartExistance.middleware.js";
+import {
+  cartExistance,
+  isQuantityZero,
+} from "../middlewares/cart.middleware.js";
 import { productExistance } from "../middlewares/productExistance.middleware.js";
 import { authorization } from "../middlewares/authorization.middleware.js";
+import { passportCall } from "../middlewares/passport.middleware.js";
 
 const router = Router();
 
@@ -16,8 +20,18 @@ router
     cartsController.getAllProductInCart(req, res);
   })
 
+  .get(
+    "/:cid/purchase",
+    passportCall("jwt"),
+    authorization("user"),
+    (req, res) => {
+      cartsController.purchaseCart(req, res);
+    }
+  )
+
   .post(
     "/:cid/products/:pid",
+    passportCall("jwt"),
     authorization("user"),
     cartExistance,
     productExistance,
@@ -28,9 +42,11 @@ router
 
   .put(
     "/:cid/products/:pid",
+    passportCall("jwt"),
     authorization("user"),
     cartExistance,
     productExistance,
+    isQuantityZero,
     (req, res) => {
       cartsController.updateProductQuantity(req, res);
     }
@@ -38,6 +54,7 @@ router
 
   .delete(
     "/:cid/products/:pid",
+    passportCall("jwt"),
     authorization("user"),
     cartExistance,
     productExistance,
@@ -46,8 +63,14 @@ router
     }
   )
 
-  .delete("/:cid", authorization("user"), cartExistance, (req, res) => {
-    cartsController.deleteAllProductFromCart(req, res);
-  });
+  .delete(
+    "/:cid",
+    passportCall("jwt"),
+    authorization("user"),
+    cartExistance,
+    (req, res) => {
+      cartsController.clearProductFromCart(req, res);
+    }
+  );
 
 export default router;

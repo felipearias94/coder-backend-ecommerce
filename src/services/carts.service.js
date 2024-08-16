@@ -14,14 +14,14 @@ const addProductToCart = async (cid, pid) => {
 };
 
 const deleteProductToCart = async (cid, pid) => {
-  return await cartRepository.deleteProductToCart(cid, pid);
+  return await cartRepository.deleteProductFromCart(cid, pid);
 };
 const updateQuantityProductInCart = async (cid, pid, quantity) => {
-  return await cartRepository.updateQuantityProductInCart(cid, pid, quantity);
+  return await cartRepository.updateProductQuantity(cid, pid, quantity);
 };
 
 const clearProductsToCart = async (cid) => {
-  return await cartRepository.clearProductsToCart(cid);
+  return await cartRepository.deleteAllProductFromCart(cid);
 };
 
 const purchaseCart = async (cid) => {

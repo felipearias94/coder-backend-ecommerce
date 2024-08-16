@@ -7,10 +7,10 @@ export const createToken = (user) => {
     { _id, email, role, cart },
     envsConfig.JWT_SECRET_CODE,
     {
-      expiresIn: "2m",
+      expiresIn: "2h",
     }
   );
-  
+
   return token;
 };
 

@@ -30,7 +30,7 @@ export const initializePassport = () => {
             return done(null, false, { message: "User already exists" });
           }
 
-          const cart = await cartsService.createNewCart();
+          const cart = await cartsService.createCart();
 
           const newUser = {
             first_name,
