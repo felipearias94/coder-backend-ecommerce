@@ -1,4 +1,4 @@
-import usersDB from "../database/user.dao.js";
+import usersDB from "../database/user.repository.js";
 
 const getAllUsers = () => {
   return usersDB.getAll();

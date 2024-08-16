@@ -3,6 +3,7 @@ import cartsController from "../controllers/carts.controller.js";
 import { checkCartData } from "../middlewares/checkCartData.middleware.js";
 import { cartExistance } from "../middlewares/cartExistance.middleware.js";
 import { productExistance } from "../middlewares/productExistance.middleware.js";
+import { authorization } from "../middlewares/authorization.middleware.js";
 
 const router = Router();
 
@@ -15,16 +16,29 @@ router
     cartsController.getAllProductInCart(req, res);
   })
 
-  .post("/:cid/products/:pid", cartExistance, productExistance, (req, res) => {
-    cartsController.addProductToCart(req, res);
-  })
+  .post(
+    "/:cid/products/:pid",
+    authorization("user"),
+    cartExistance,
+    productExistance,
+    (req, res) => {
+      cartsController.addProductToCart(req, res);
+    }
+  )
 
-  .put("/:cid/products/:pid", cartExistance, productExistance, (req, res) => {
-    cartsController.updateProductQuantity(req, res);
-  })
+  .put(
+    "/:cid/products/:pid",
+    authorization("user"),
+    cartExistance,
+    productExistance,
+    (req, res) => {
+      cartsController.updateProductQuantity(req, res);
+    }
+  )
 
   .delete(
     "/:cid/products/:pid",
+    authorization("user"),
     cartExistance,
     productExistance,
     (req, res) => {
@@ -32,7 +46,7 @@ router
     }
   )
 
-  .delete("/:cid", cartExistance, (req, res) => {
+  .delete("/:cid", authorization("user"), cartExistance, (req, res) => {
     cartsController.deleteAllProductFromCart(req, res);
   });
 

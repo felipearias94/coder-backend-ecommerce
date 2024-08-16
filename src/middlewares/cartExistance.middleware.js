@@ -1,6 +1,6 @@
 import { request, response } from "express";
 import { isValidObjectId } from "mongoose";
-import Cart from "../database/cart.dao.js";
+import Cart from "../database/cart.repository.js";
 
 export const cartExistance = async (req = request, res = response, next) => {
   const { cid } = req.params;

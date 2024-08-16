@@ -1,39 +1,58 @@
-import cartsDB from "../database/cart.dao.js";
+import cartRepository from "../database/cart.repository.js";
+import productRepository from "../database/product.repository.js";
 
-const createNewCart = (data) => {
-  return cartsDB.create(data);
+const createCart = async () => {
+  return await cartRepository.create();
 };
 
-const getAllProductsInCart = (cid) => {
-  return cartsDB.getAllProductsInCart(cid);
+const getCartById = async (cid) => {
+  return await cartRepository.getById(cid);
 };
 
-const addProductToCart = (id, productId) => {
-  return cartsDB.addProductToCart(id, productId);
+const addProductToCart = async (cid, pid) => {
+  return await cartRepository.addProductToCart(cid, pid);
 };
 
-const getCartById = (cid) => {
-  return cartsDB.getById(cid);
+const deleteProductToCart = async (cid, pid) => {
+  return await cartRepository.deleteProductToCart(cid, pid);
+};
+const updateQuantityProductInCart = async (cid, pid, quantity) => {
+  return await cartRepository.updateQuantityProductInCart(cid, pid, quantity);
 };
 
-const updateProductQuantity = async (cid, pid, quantity) => {
-  return cartsDB.updateProductQuantity(cid, pid, quantity);
+const clearProductsToCart = async (cid) => {
+  return await cartRepository.clearProductsToCart(cid);
 };
 
-const deleteProductFromCart = (cid, pid) => {
-  return cartsDB.deleteProductFromCart(cid, pid);
-};
+const purchaseCart = async (cid) => {
+  const cart = await cartRepository.getById(cid);
+  let total = 0;
+  const productsWithOutStock = [];
 
-const deleteAllProductFromCart = (cid) => {
-  return cartsDB.deleteAllProductFromCart(cid);
+  for (const productCart of cart.products) {
+    const product = await productRepository.getById(productCart.product);
+
+    if (product.stock >= productCart.quantity) {
+      total += product.price * productCart.quantity;
+      await productRepository.update(product._id, {
+        stock: product.stock - productCart.quantity,
+      });
+    } else {
+      productsWithOutStock.push(productCart);
+    }
+
+    await cartRepository.update(cid, { products: productsWithOutStock });
+  }
+
+  return total;
 };
 
 export default {
-  createNewCart,
-  getAllProductsInCart,
-  addProductToCart,
+  createCart,
   getCartById,
-  updateProductQuantity,
-  deleteProductFromCart,
-  deleteAllProductFromCart,
+  addProductToCart,
+  deleteProductToCart,
+  updateQuantityProductInCart,
+  clearProductsToCart,
+  purchaseCart,
 };
