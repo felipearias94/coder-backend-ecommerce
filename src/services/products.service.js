@@ -1,26 +1,32 @@
-import productsDB from "../database/products.js";
+import productsDB from "../database/product.dao.js";
 
-const getAllProducts = (limit) => {
-  return productsDB.getAllProducts(limit);
+const getAllProducts = () => {
+  return productsDB.getAll();
 };
+
+const getProducts = (query, options) => {
+  return productsDB.getProducts(query, options);
+};
+
 const getProductById = (pid) => {
-  return productsDB.getProductById(pid);
+  return productsDB.getById(pid);
 };
-//Solo por la 2da entrega, moveré el generador de ID al servicio, para que no genere conflictos con el controlador a la hora de usar sockets.
-//Porque al hacerlo por el controlador tiraba error 'Can't set headers after they are sent to the client'
+
 const createNewProduct = (newProduct) => {
-  const productWithId = { id: new Date().getMilliseconds(), ...newProduct };
-  return productsDB.createNewProduct(productWithId);
+  return productsDB.create(newProduct);
 };
-const updateProduct = (product) => {
-  return productsDB.updateProduct(product);
+
+const updateProduct = (id, data) => {
+  return productsDB.update(id, data);
 };
+
 const deleteProduct = (pid) => {
-  return productsDB.deleteProduct(pid);
+  return productsDB.deleteOne(pid);
 };
 
 export default {
   getAllProducts,
+  getProducts,
   getProductById,
   createNewProduct,
   updateProduct,

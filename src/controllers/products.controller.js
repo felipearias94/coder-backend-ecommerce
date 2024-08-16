@@ -2,8 +2,31 @@ import productsServices from "../services/products.service.js";
 
 const getAllProducts = async (req, res) => {
   try {
-    const { limit } = req.query;
-    const allProducts = await productsServices.getAllProducts(limit);
+    const { limit, page, sort, category, status } = req.query;
+
+    const options = {
+      limit: limit || 10,
+      page: page || 1,
+      sort: { price: sort === "asc" ? 1 : -1 },
+      learn: true,
+    };
+
+    if (category) {
+      const products = await productsServices.getProducts(
+        { category },
+        options
+      );
+
+      return res.status(200).json({ status: "OK", payload: products });
+    }
+
+    if (status) {
+      const products = await productsServices.getProducts({ sta }, options);
+
+      return res.status(200).json({ status: "OK", payload: products });
+    }
+
+    const allProducts = await productsServices.getProducts({}, options);
     res.status(200).json({ status: "OK", payload: allProducts });
   } catch (error) {
     res
@@ -17,6 +40,7 @@ const getProductById = async (req, res) => {
     const { pid } = req.params;
 
     const productById = await productsServices.getProductById(pid);
+
     res.status(200).json({ status: "OK", payload: productById });
   } catch (error) {
     res
@@ -31,7 +55,6 @@ const createNewProduct = async (req, res) => {
       req.body;
 
     let newProduct = {
-      // id: new Date().getMilliseconds(), en el servicio se explica pq se saca el generador de ID.
       title,
       description,
       price,
@@ -45,7 +68,7 @@ const createNewProduct = async (req, res) => {
     const createdNewProduct = await productsServices.createNewProduct(
       newProduct
     );
-    
+
     res.status(201).json({ status: "OK", payload: createdNewProduct });
   } catch (error) {
     res
@@ -56,10 +79,11 @@ const createNewProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const updatedProduct = await productsServices.updateProduct({
+    const { pid } = req.params;
+    const updatedProduct = await productsServices.updateProduct(pid, {
       ...req.body,
-      id: Number(req.params.pid),
     });
+
     res.status(200).json({ status: "OK", payload: updatedProduct });
   } catch (error) {
     res
@@ -70,9 +94,7 @@ const updateProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
-    const deletedProduct = await productsServices.deleteProduct(
-      Number(req.params.pid)
-    );
+    const deletedProduct = await productsServices.deleteProduct(req.params.pid);
     res.status(200).json({ status: "OK", payload: deletedProduct });
   } catch (error) {
     res

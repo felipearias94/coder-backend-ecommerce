@@ -1,5 +1,5 @@
 import { request, response } from "express";
-import Products from "../database/products.js";
+import Products from "../database/product.dao.js";
 
 export const checkProductData = async (req = request, res = response, next) => {
   try {
@@ -14,13 +14,15 @@ export const checkProductData = async (req = request, res = response, next) => {
       category,
     };
 
-    const products = await Products.getAllProducts();
-    const productExist = products.find((prod) => prod.code === code);
+    const products = await Products.getAll();
+    const productExist = products.find((prod) => {
+      prod.code === code;
+    });
 
     if (productExist)
       return res.status(400).json({
         status: "Error",
-        message: `El producto ${newProduct.title} ya existe`,
+        message: `El producto ${newProduct.title} ya existe con código ${newProduct.code}`,
       });
 
     const checkData = Object.values(newProduct).includes(undefined);

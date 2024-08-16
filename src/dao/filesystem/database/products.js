@@ -1,6 +1,6 @@
 import DB from "./utils.js";
 
-const pathToFile = "./src/database/products.json";
+const pathToFile = "./src/dao/filesystem/database/products.json";
 const productsJSON = await DB.readFromDataBase(pathToFile);
 const productParsed = await JSON.parse(productsJSON);
 
