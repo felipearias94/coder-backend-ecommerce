@@ -64,7 +64,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/666c837fb8ba1c95894326bd",
+							"raw": "http://localhost:8080/api/products/66aa82b8b865d1da2d38cb58",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -73,7 +73,7 @@
 							"path": [
 								"api",
 								"products",
-								"666c837fb8ba1c95894326bd"
+								"66aa82b8b865d1da2d38cb58"
 							]
 						}
 					},
@@ -204,7 +204,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/666c869e2f43e02f1540787e",
+							"raw": "http://localhost:8080/api/carts/66bf6d7be3b6825a0abd52e6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -213,7 +213,7 @@
 							"path": [
 								"api",
 								"carts",
-								"666c869e2f43e02f1540787e"
+								"66bf6d7be3b6825a0abd52e6"
 							]
 						}
 					},
@@ -234,7 +234,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carts/666c869e2f43e02f1540787e/products/666c833712ff0d6e602e0b7e",
+							"raw": "http://localhost:8080/api/carts/66bf6d7be3b6825a0abd52e6/products/66aa82b8b865d1da2d38cb58",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -243,9 +243,9 @@
 							"path": [
 								"api",
 								"carts",
-								"666c869e2f43e02f1540787e",
+								"66bf6d7be3b6825a0abd52e6",
 								"products",
-								"666c833712ff0d6e602e0b7e"
+								"66aa82b8b865d1da2d38cb58"
 							]
 						}
 					},
@@ -257,7 +257,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/carts/666c869e2f43e02f1540787e/products/666c833712ff0d6e602e0b7d",
+							"raw": "http://localhost:8080/api/carts/66bf6d7be3b6825a0abd52e6/products/66aa82b8b865d1da2d38cb58",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -266,9 +266,9 @@
 							"path": [
 								"api",
 								"carts",
-								"666c869e2f43e02f1540787e",
+								"66bf6d7be3b6825a0abd52e6",
 								"products",
-								"666c833712ff0d6e602e0b7d"
+								"66aa82b8b865d1da2d38cb58"
 							]
 						}
 					},
@@ -289,7 +289,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/carts/666c869e2f43e02f1540787e/products/666c833712ff0d6e602e0b7d",
+							"raw": "http://localhost:8080/api/carts/66bf6d7be3b6825a0abd52e6/products/66aa82b8b865d1da2d38cb58",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -298,9 +298,9 @@
 							"path": [
 								"api",
 								"carts",
-								"666c869e2f43e02f1540787e",
+								"66bf6d7be3b6825a0abd52e6",
 								"products",
-								"666c833712ff0d6e602e0b7d"
+								"66aa82b8b865d1da2d38cb58"
 							]
 						}
 					},
@@ -322,6 +322,126 @@
 								"api",
 								"carts",
 								"666c869e2f43e02f1540787e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "purchaseCart",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/66bf6d7be3b6825a0abd52e6/purchase",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"66bf6d7be3b6825a0abd52e6",
+								"purchase"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\":\"Felipe\",\r\n    \"last_name\":\"Arias\",\r\n    \"password\":\"abc123\",\r\n    \"age\":29,\r\n    \"email\":\"felipe@arias.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"felipe@arias.com\",\r\n    \"password\":\"abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "current",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/sessions/current",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"sessions",
+								"current"
 							]
 						}
 					},
