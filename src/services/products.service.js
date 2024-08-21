@@ -1,4 +1,4 @@
-import productsDB from "../database/product.dao.js";
+import productsDB from "../database/product.repository.js";
 
 const getAllProducts = () => {
   return productsDB.getAll();

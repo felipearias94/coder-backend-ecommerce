@@ -1,10 +1,10 @@
 import cartsService from "../services/carts.service.js";
 import productsService from "../services/products.service.js";
-import { Types } from "mongoose";
+import ticketServices from "../services/ticket.service.js";
 
 const createNewCart = async (req, res) => {
   try {
-    const createdNewCart = await cartsService.createNewCart(req.body);
+    const createdNewCart = await cartsService.createCart(req.body);
     res.status(201).json({ status: "OK", payload: createdNewCart });
   } catch (error) {
     res
@@ -61,21 +61,7 @@ const updateProductQuantity = async (req, res) => {
     const { cid, pid } = req.params;
     const { quantity } = req.body;
 
-    const product = await productsService.getProductById(pid);
-    if (!product) {
-      return res
-        .status(404)
-        .json({ status: "Error", message: "Producto no encontrado" });
-    }
-
-    const cart = await cartsService.getCartById(cid);
-    if (!cart) {
-      return res
-        .status(404)
-        .json({ status: "Error", message: "Carrito no encontrado" });
-    }
-
-    const cartUpdated = await cartsService.updateProductQuantity(
+    const cartUpdated = await cartsService.updateQuantityProductInCart(
       cid,
       pid,
       quantity
@@ -87,6 +73,25 @@ const updateProductQuantity = async (req, res) => {
     res
       .status(error?.status || 500)
       .json({ status: "Error", message: error.message });
+  }
+};
+
+const purchaseCart = async (req = request, res = response) => {
+  try {
+    const { cid } = req.params;
+    const cart = await cartsService.getCartById(cid);
+    if (!cart)
+      return res
+        .status(404)
+        .json({ status: "Error", msg: "Carrito no encontrado" });
+
+    const total = await cartsService.purchaseCart(cid);
+    const ticket = await ticketServices.createTicket(req.user.email, total);
+
+    res.status(200).json({ status: "success", ticket });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ status: "Error", msg: "Internal server error" });
   }
 };
 
@@ -107,7 +112,7 @@ const deleteProductFromCart = async (req, res) => {
         .status(404)
         .json({ status: "Error", message: "Carrito no encontrado" });
     }
-    const productDeleted = await cartsService.deleteProductFromCart(cid, pid);
+    const productDeleted = await cartsService.deleteProductToCart(cid, pid);
 
     res.status(201).json({ status: "Ok", payload: productDeleted });
   } catch (error) {
@@ -118,11 +123,11 @@ const deleteProductFromCart = async (req, res) => {
   }
 };
 
-const deleteAllProductFromCart = async (req, res) => {
+const clearProductFromCart = async (req, res) => {
   try {
     const { cid } = req.params;
 
-    const productDeleted = await cartsService.deleteAllProductFromCart(cid);
+    const productDeleted = await cartsService.clearProductsToCart(cid);
 
     res.status(200).json({ status: "Ok", payload: productDeleted });
   } catch (error) {
@@ -137,7 +142,8 @@ export default {
   createNewCart,
   getAllProductInCart,
   addProductToCart,
+  purchaseCart,
   updateProductQuantity,
   deleteProductFromCart,
-  deleteAllProductFromCart,
+  clearProductFromCart,
 };

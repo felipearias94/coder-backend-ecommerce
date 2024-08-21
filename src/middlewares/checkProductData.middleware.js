@@ -1,5 +1,5 @@
 import { request, response } from "express";
-import Products from "../database/product.dao.js";
+import Products from "../database/product.repository.js";
 
 export const checkProductData = async (req = request, res = response, next) => {
   try {

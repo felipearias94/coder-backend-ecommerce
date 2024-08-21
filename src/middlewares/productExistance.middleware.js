@@ -1,5 +1,5 @@
 import { request, response } from "express";
-import Products from "../database/product.dao.js";
+import Products from "../database/product.repository.js";
 import { isValidObjectId } from "mongoose";
 
 export const productExistance = async (req = request, res = response, next) => {
@@ -11,7 +11,7 @@ export const productExistance = async (req = request, res = response, next) => {
       message: "Id de producto invalido",
     });
   }
-  
+
   const product = await Products.getById(pid);
   if (!product) {
     return res.status(404).json({

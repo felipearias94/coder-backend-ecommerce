@@ -8,9 +8,10 @@ const router = Router();
 router.use("/sessions", sessionRoutes);
 router.use("/products", productsRoutes);
 router.use("/carts", cartsRoutes);
+
 router.get("*", async (req, res) => {
   try {
-    res.status(404).json({ status: "error", message: "Route not found" });
+    res.status(404).json({ status: "Error", message: "Route not found" });
   } catch (error) {
     console.log(error);
     res
